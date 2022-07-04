@@ -22,11 +22,11 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("health")
+@RequestMapping("/health")
 public class HealthController {
 
     public static final String TOTAL_ZUS_DESCRIPTION = "Total zus";
-    private final HealthRepository disabilityZusRepository;
+    private final HealthRepository healthRepository;
     private final SalaryCalculatorService salaryCalculatorService;
     private final RatesConfigurationProperties ratesConfigurationProperties;
     private static final String TOTAL_ZUS_ENDPOINT = "http://TOTAL-ZUS/totalZus/getTotalZus/";
@@ -38,7 +38,7 @@ public class HealthController {
     public Map<String, BigDecimal> calculateHealth(@PathVariable @Min(2000)BigDecimal grossMonthlySalary){
         var totalZus = Objects.requireNonNull(this.restTemplate.postForEntity(TOTAL_ZUS_ENDPOINT + grossMonthlySalary, HttpMethod.POST, HashMap.class).getBody()).get(TOTAL_ZUS_DESCRIPTION);
         var health = this.salaryCalculatorService.apply(grossMonthlySalary.subtract((BigDecimal.valueOf(((Double)(totalZus))))));
-        this.disabilityZusRepository.save(Health.builder().healthAmount(health).healthRate(this.ratesConfigurationProperties.getHealthRate()).build());
+        this.healthRepository.save(Health.builder().healthAmount(health).healthRate(this.ratesConfigurationProperties.getHealthRate()).build());
         return new LinkedHashMap<>(Map.of(this.salaryCalculatorService.getDescription(), health));
     }
 }

@@ -29,14 +29,14 @@ class HealthTest {
    @Autowired
    private ObjectMapper objectMapper;
 
-    private final String TOTAL_ZUS_ENDPOINT = "/health/getHealth/";
+    private final String HEALTH_ENDPOINT = "/health/getHealth/";
 
 
     @ParameterizedTest
     @CsvSource({"6000,465.97", "7000, 543.63", "8555,664.39", "15143.99,1176.10"})
     public void calculateHealth(BigDecimal input, BigDecimal health) throws Exception {
         var expected = this.objectMapper.writeValueAsString(Map.of("Health zus", health));
-        this.mockMvc.perform(post(TOTAL_ZUS_ENDPOINT + input).contentType(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(post(HEALTH_ENDPOINT + input).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));
     }
