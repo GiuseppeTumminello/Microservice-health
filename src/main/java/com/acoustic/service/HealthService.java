@@ -16,7 +16,7 @@ public class HealthService implements SalaryCalculatorService{
 
     @Override
     public String getDescription() {
-        return "Health zus";
+        return "Health";
     }
 
     @Override

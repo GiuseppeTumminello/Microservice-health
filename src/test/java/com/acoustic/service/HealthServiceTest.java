@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 
 
 @ExtendWith(MockitoExtension.class)
-class TotalZusServiceTest {
+class HealthServiceTest {
 
     @InjectMocks
     private HealthService healthService;
