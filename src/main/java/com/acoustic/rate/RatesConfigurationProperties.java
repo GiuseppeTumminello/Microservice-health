@@ -18,4 +18,6 @@ public class RatesConfigurationProperties {
 
     private BigDecimal healthRate;
 
+    private BigDecimal totalZusRate;
+
 }

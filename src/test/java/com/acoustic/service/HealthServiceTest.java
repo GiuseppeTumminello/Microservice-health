@@ -18,6 +18,8 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class HealthServiceTest {
 
+    public static final String HEALTH_DESCRIPTION = "Health";
+    public static final double TOTAL_ZUS_RATE = 0.1371;
     @InjectMocks
     private HealthService healthService;
 
@@ -26,13 +28,14 @@ class HealthServiceTest {
 
     @Test
     void getDescription() {
-        assertThat(this.healthService.getDescription()).isEqualTo("Health zus");
+        assertThat(this.healthService.getDescription()).isEqualTo(HEALTH_DESCRIPTION);
     }
 
     @ParameterizedTest
-    @CsvSource({"5177.4, 465.97, 0.09", "6040.30, 543.63, 0.09", "13712.93, 1234.16, 0.09"})
+    @CsvSource({"6000, 465.97, 0.09", "7000, 543.63, 0.09", "15143.99, 1176.10, 0.09"})
     public void getHealth(BigDecimal input, BigDecimal expected, BigDecimal rate) {
         given(this.ratesConfigurationProperties.getHealthRate()).willReturn(rate);
+        given(this.ratesConfigurationProperties.getTotalZusRate()).willReturn(BigDecimal.valueOf(TOTAL_ZUS_RATE));
         assertThat(this.healthService.apply(input)).isEqualTo(expected);
     }
 }

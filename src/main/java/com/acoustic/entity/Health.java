@@ -23,5 +23,4 @@ public class Health {
 
     private BigDecimal healthAmount;
 
-    private BigDecimal healthRate;
 }
