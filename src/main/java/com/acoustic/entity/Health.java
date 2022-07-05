@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @Entity
 public class Health {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private BigDecimal healthAmount;
