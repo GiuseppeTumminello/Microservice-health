@@ -20,6 +20,7 @@ class HealthServiceTest {
 
     public static final String HEALTH_DESCRIPTION = "Health";
     public static final double TOTAL_ZUS_RATE = 0.1371;
+    public static final double HEALTH_RATE = 0.09;
     @InjectMocks
     private HealthService healthService;
 
@@ -32,9 +33,9 @@ class HealthServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"6000, 465.97, 0.09", "7000, 543.63, 0.09", "15143.99, 1176.10, 0.09"})
-    public void getHealth(BigDecimal input, BigDecimal expected, BigDecimal rate) {
-        given(this.ratesConfigurationProperties.getHealthRate()).willReturn(rate);
+    @CsvSource({"6000, 465.97", "7000, 543.63", "15143.99, 1176.10"})
+    public void getHealth(BigDecimal input, BigDecimal expected) {
+        given(this.ratesConfigurationProperties.getHealthRate()).willReturn(BigDecimal.valueOf(HEALTH_RATE));
         given(this.ratesConfigurationProperties.getTotalZusRate()).willReturn(BigDecimal.valueOf(TOTAL_ZUS_RATE));
         assertThat(this.healthService.apply(input)).isEqualTo(expected);
     }
