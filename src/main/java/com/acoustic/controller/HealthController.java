@@ -23,7 +23,7 @@ public class HealthController {
     private final SalaryCalculatorService salaryCalculatorService;
 
 
-    @PostMapping("/getHealth/{grossMonthlySalary}")
+    @PostMapping("/calculation/{grossMonthlySalary}")
     public Map<String, String> calculateHealth(@PathVariable @Min(2000) BigDecimal grossMonthlySalary) {
         var health = this.salaryCalculatorService.apply(grossMonthlySalary);
         this.healthRepository.save(Health.builder().healthAmount(health).build());

@@ -32,7 +32,7 @@ class HealthTest {
    @Autowired
    private ObjectMapper objectMapper;
 
-    private final String HEALTH_ENDPOINT = "/health/getHealth/";
+    private final String HEALTH_ENDPOINT = "/health/calculation/";
 
 
     @ParameterizedTest
