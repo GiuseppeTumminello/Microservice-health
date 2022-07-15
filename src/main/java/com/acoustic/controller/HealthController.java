@@ -19,12 +19,13 @@ public class HealthController {
 
     public static final String DESCRIPTION = "description";
     public static final String VALUE = "value";
+    public static final int MINIMUM_GROSS = 2000;
     private final HealthRepository healthRepository;
     private final SalaryCalculatorService salaryCalculatorService;
 
 
     @PostMapping("/calculation/{grossMonthlySalary}")
-    public Map<String, String> calculateHealth(@PathVariable @Min(2000) BigDecimal grossMonthlySalary) {
+    public Map<String, String> calculateHealth(@PathVariable @Min(MINIMUM_GROSS) BigDecimal grossMonthlySalary) {
         var health = this.salaryCalculatorService.apply(grossMonthlySalary);
         this.healthRepository.save(Health.builder().healthAmount(health).build());
         return Map.of(DESCRIPTION, this.salaryCalculatorService.getDescription(), VALUE, String.valueOf(health));
